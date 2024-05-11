@@ -1,19 +1,15 @@
-const quickSortRandomPivot = (arr) => {
-  if (arr.length <= 1) {
-    return arr;
+function uniquePaths(m, n) {
+  const dp = Array.from(Array(m), () => Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    dp[i][0] = 1;
   }
-  const pivotIndex = Math.floor(Math.random() * arr.length);
-  const pivot = arr[pivotIndex];
-  const left = [];
-  const right = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (i !== pivotIndex) {
-      if (arr[i] <= pivot) {
-        left.push(arr[i]);
-      } else {
-        right.push(arr[i]);
-      }
+  for (let j = 0; j < n; j++) {
+    dp[0][j] = 1;
+  }
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
     }
   }
-  return quickSortRandomPivot(left).concat(pivot, quickSortRandomPivot(right));
-};
+  return dp[m - 1][n - 1];
+}
